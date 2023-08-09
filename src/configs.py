@@ -3,19 +3,12 @@ labels_dict = {
     1: 'bad_text'
 }
 
-# depara_emb =  {
-#     'vowels': 1,
-#     'consonants': 2,
-#     'espace': 10,
-#     'digits': 3,
-#     'punctuations': 4,
-#     'pad': 5,
-#     'unk': 6
-# }
 
 depara_emb =  {
     'vowels': 1,
+    'vowels_uppercase': 10,
     'consonants': 2,
+    'consonants_uppercase': 20,
     'espace': 0,
     'digits': 3,
     'punctuations': 4,
@@ -24,6 +17,8 @@ depara_emb =  {
 }
 
 vowels = 'aeiou'
+vowels_uppercase = 'AEIOU'
 consonants = 'bcdfghjklmnpqrstvwxyz'
+consonants_uppercase = 'BCDFGHJKLMNPQRSTVWXYZ'
 digits = '0123456789'
 punctuations = '.,;:!?@#$%&*(){}[]_-+='

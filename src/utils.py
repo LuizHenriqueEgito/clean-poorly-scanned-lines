@@ -1,20 +1,29 @@
+import yaml
+import unidecode
+import numpy as np
+
 from pathlib import Path
 from typing import List, Dict
 from src.configs import (
     depara_emb,
     vowels,
+    vowels_uppercase,
     consonants,
+    consonants_uppercase,
     digits,
     punctuations
 )
-import unidecode
-import numpy as np
+
+with open('settings.yaml', 'r') as file:
+    settings = yaml.safe_load(file)
+
 
 def get_text(path: Path) -> str:
     return Path(path).read_text(encoding='utf-8')
 
-def preprocess_text(text: str) -> str:
-    text = text.lower()
+def preprocess_text(text: str, lower: bool = settings['lower']) -> str:
+    if lower:
+        text = text.lower()
     text = unidecode.unidecode(text)
     return text
 
@@ -22,7 +31,7 @@ def text_to_list(text: str) -> List[str]:
     list_texts = text.split('\n')
     return list_texts
 
-def fill_pad_list(list_: List[int], limit:int = 30):
+def fill_pad_list(list_: List[int], limit: int = settings['limit_pad']):
     if len(list_) > limit:
         list_ = list_[:limit]
     while len(list_) < limit:
@@ -42,6 +51,10 @@ def encodding_text(text: str) -> List[int]:
             transformed_list.append(depara_emb['digits'])
         elif char in punctuations:
             transformed_list.append(depara_emb['punctuations'])
+        elif char in consonants_uppercase:
+            transformed_list.append(depara_emb['consonants_uppercase'])
+        elif char in vowels_uppercase:
+            transformed_list.append(depara_emb['vowels_uppercase'])
         else:
             transformed_list.append(depara_emb['unk'])
     transformed_list_pad = fill_pad_list(transformed_list)
